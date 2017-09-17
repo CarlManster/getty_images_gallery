@@ -38,6 +38,12 @@ class MainViewController: UIViewController {
             } else {
                 strongSelf.mainImages = nil
                 strongSelf.relatedImages = nil
+                
+                let alertController = UIAlertController(title: "오류", message: "데이터를 가져오는 데 실패했습니다.", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil )
+                alertController.addAction(alertAction)
+                
+                strongSelf.present(alertController, animated: true, completion: nil)
             }
             
             strongSelf.collectionView.reloadData()
