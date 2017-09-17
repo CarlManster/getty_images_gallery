@@ -13,6 +13,8 @@ import Kanna
 class DataProvider: NSObject {
     static let baseURL = "http://www.gettyimagesgallery.com"
     static let pagePath = "/collections/archive/slim-aarons.aspx"
+//    static let pagePath = "/collections/archive/decorex.aspx"
+//    static let pagePath = "/collections/archive/ernst-haas.aspx"
  
     class func fetchImageList(_ completion: @escaping ((Bool, [String : [String]]?) -> Void)) {
         Alamofire.request("\(baseURL)\(pagePath)").responseString { response in
@@ -33,10 +35,23 @@ class DataProvider: NSObject {
             
             var result: [String : [String]] = [:]
             
-            // Main Slider
-            let slider = htmlDoc.xpath(".//*[@id='slider']/ul[1]/li/img")
-            
             var mainImage: [String] = []
+            
+            /* Search by XPath Syntax
+             * https://www.w3schools.com/xml/xpath_syntax.asp
+             */
+            
+            // Main - Single
+            let single = htmlDoc.xpath(".//*[@class='ex-col-wrapperleft']/img")
+            
+            for link in single {
+                if let imgSrc = link["src"], imgSrc.isEmpty == false {
+                    mainImage.append("\(baseURL)\(imgSrc)")
+                }
+            }
+            
+            // Main - Slider
+            let slider = htmlDoc.xpath(".//*[@id='slider']/ul[1]/li/img")
             
             for link in slider {
                 if let imgSrc = link["src"], imgSrc.isEmpty == false {
