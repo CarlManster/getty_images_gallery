@@ -31,9 +31,9 @@ extension MainViewController: UICollectionViewDataSource {
         if let cell = cell as? TitleHeaderView {
             switch indexPath.section {
             case 0:
-                cell.titleLabel.text = "Main"
+                cell.titleLabel.text = "Main (\(mainImages?.count ?? 0))"
             case 1:
-                cell.titleLabel.text = "Related"
+                cell.titleLabel.text = "Related (\(relatedImages?.count ?? 0))"
             default:
                 break
             }
